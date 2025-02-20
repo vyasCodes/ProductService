@@ -18,12 +18,11 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-    private final ProductRepository productRepository;
-    //    @Autowired
     ProductService productService;
-    public ProductController(@Qualifier("SelfProdService") ProductService productService, ProductRepository productRepository) {
+
+    @Autowired
+    public ProductController(@Qualifier("SelfProdService") ProductService productService) {
         this.productService = productService;
-        this.productRepository = productRepository;
     }
 
     @GetMapping("/products")
