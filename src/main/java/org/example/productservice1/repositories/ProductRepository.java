@@ -4,6 +4,8 @@ import org.example.productservice1.models.Category;
 import org.example.productservice1.models.Product;
 import org.example.productservice1.projections.productProjection;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +24,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Override
     List<Product> findAll();
+
+    @Override
+    Page<Product> findAll(Pageable pageable);
 
     Product save(Product product);
 

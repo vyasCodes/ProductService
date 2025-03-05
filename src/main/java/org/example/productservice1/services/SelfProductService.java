@@ -6,6 +6,9 @@ import org.example.productservice1.models.Product;
 import org.example.productservice1.repositories.CategoryRepository;
 import org.example.productservice1.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,7 +70,17 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategory(String category) {
-        return productRepository.findAllByCategory_Title(category);
+    public List<Product> getProductsByCategory(String category) throws ProductNotFoundException {
+        List<Product> p = productRepository.findAllByCategory_Title(category);
+
+        if (p.size() == 0) throw new ProductNotFoundException("No products with category: " + category + " found.");
+
+        return p;
+    }
+
+    @Override
+    public Page<Product> findAllProductsPaginated(int pageNo, int size) {
+        Page<Product> paginatedProducts = productRepository.findAll(PageRequest.of(pageNo, size));
+        return paginatedProducts;
     }
 }

@@ -9,6 +9,7 @@ import org.example.productservice1.services.FakeStoreProductService;
 import org.example.productservice1.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -61,8 +62,18 @@ public class ProductController {
     }
 
     @GetMapping("/products/category/{category}")
-    public List<Product> getProductByCategory(@PathVariable("category") String category) {
+    public List<Product> getProductByCategory(@PathVariable("category") String category) throws ProductNotFoundException {
         return productService.getProductsByCategory(category);
+    }
+
+    @GetMapping("/products/paginated/")
+    public List<Product> getAllPaginated(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
+        Page<Product> paginatedProducts = productService.findAllProductsPaginated(pageNo, pageSize);
+        if (paginatedProducts == null) {
+            System.out.println("No paginated products found");
+            return null;
+        }
+        return paginatedProducts.getContent();
     }
 
 }

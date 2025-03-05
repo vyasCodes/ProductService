@@ -4,6 +4,8 @@ package org.example.productservice1.services;
 import org.example.productservice1.dtos.FakeStoreProductDto;
 import org.example.productservice1.exceptions.ProductNotFoundException;
 import org.example.productservice1.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -59,6 +61,11 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public List<Product> getProductsByCategory(String category) {
+        return null;
+    }
+
+    @Override
+    public Page<Product> findAllProductsPaginated(int pageNo, int pageSize) {
         return null;
     }
 }
